@@ -1,0 +1,2 @@
+/home/alumno/Desktop/SOR2/TP0/parte2/charDevice.o
+
