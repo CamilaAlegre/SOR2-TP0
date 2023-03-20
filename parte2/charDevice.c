@@ -27,6 +27,8 @@ static int Device_Open = 0;
 //static short size_of_message;
 
 static char Message[BUF_LEN];
+
+static char MessageInver[BUF_LEN];
 static char *Message_Ptr;
 
 static struct file_operations fops = {
@@ -74,16 +76,29 @@ static ssize_t device_write(struct file *file,
 	     const char __user * buffer, size_t length, loff_t * offset)
 {
 	int i;
+	int j=0;
+	int pos=length-1;
+	strcpy(Message, "");
+strcpy(Message_Ptr, "");
 
+strcpy(MessageInver, "");
 	printk(KERN_INFO "device_write(%s)\n", buffer);
 	printk(KERN_INFO "device_write(%zu)", length);
 
 	for (i = 0; i < length && i < BUF_LEN; i++)
 		get_user(Message[i], buffer + i);
-
-	Message_Ptr = Message;
-
-	return i;
+	
+	Message_Ptr=Message;
+	while (pos>=0) 
+    { 
+        
+        MessageInver[j]=Message[pos];
+        pos--;
+        j++;
+    }
+    
+strcpy(Message, MessageInver);
+	return length;
 }
 
 
